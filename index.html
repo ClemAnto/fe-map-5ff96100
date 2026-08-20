@@ -117,6 +117,22 @@ code { font-family:var(--mono); }
 .area-pct { font-family:var(--mono); font-size:28px; font-weight:600; line-height:1; font-variant-numeric:tabular-nums; }
 .area-pct span { font-size:15px; color:var(--muted); }
 .area-count { font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; }
+.area-who { grid-column:1 / -1; grid-row:4; margin-top:10px; padding-top:12px;
+  border-top:1px solid var(--line-soft); display:flex; flex-direction:column; gap:9px; }
+.area-roles { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+.area-roles b { font-size:11.5px; font-weight:700; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--muted); margin-right:2px; }
+.area-roles .role i { font-style:normal; font-family:var(--mono); font-size:10.5px; opacity:.65; margin-left:5px; }
+.area-summary { font-size:13.5px; color:var(--ink-soft); max-width:100ch; }
+.area-cases { display:grid; grid-template-columns:repeat(auto-fit, minmax(330px, 1fr)); gap:10px 18px; }
+.case { border:1px solid var(--line-soft); border-radius:var(--radius); padding:10px 14px 12px; background:var(--surface); }
+.case h3 { font-size:11.5px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; margin-bottom:7px; }
+.case-can h3 { color:var(--ok); }
+.case-cant h3 { color:var(--danger); }
+.case ul { list-style:none; display:flex; flex-direction:column; gap:5px; margin:0; padding:0; }
+.case li { font-size:13px; line-height:1.45; color:var(--ink-soft); padding-left:17px; position:relative; }
+.case-can li::before { content:"✓"; position:absolute; left:0; color:var(--ok); font-weight:700; }
+.case-cant li::before { content:"✕"; position:absolute; left:0; color:var(--danger); font-weight:700; }
 
 /* ---------- albero ---------- */
 .tree { display:flex; flex-direction:column; }
@@ -220,6 +236,7 @@ footer p { font-size:12.5px; color:var(--muted); max-width:80ch; }
   .r-state .bar { width:80px; }
   .area-head { grid-template-columns:1fr; }
   .area-num { grid-column:1; grid-row:auto; text-align:left; align-items:flex-start; }
+  .area-who { grid-row:auto; }
 }
 @media print {
   .controls { display:none; }
@@ -239,7 +256,7 @@ footer p { font-size:12.5px; color:var(--muted); max-width:80ch; }
     <span class="name">FulcroTalent · Front end</span>
     <span class="stamp">
       <span class="stamp-item">Versione <b>0.1.0</b></span>
-      <span class="stamp-item">Aggiornata il <b>20/08/2026</b> alle <b>19:58</b></span>
+      <span class="stamp-item">Aggiornata il <b>20/08/2026</b> alle <b>20:13</b></span>
     </span>
   </div>
   <div class="rule"></div>
@@ -296,6 +313,11 @@ footer p { font-size:12.5px; color:var(--muted); max-width:80ch; }
       </div>
       <h2>Area pubblica e accesso</h2>
       <p class="area-hint">Chi non ha ancora fatto login, e le pagine aperte a tutti.</p>
+      <div class="area-who">
+    <p class="area-roles"><b>Chi entra</b><span class="role role-public" title="Entra in tutte le 11 pagine dell'area">Pubblico</span></p>
+    <p class="area-summary">Nessuna sessione: è ciò che si vede senza aver fatto login, più le pagine che restano aperte per scelta di prodotto. Il POP di una persona e la pagina di pagamento di un cliente vivono qui, ma con due riservatezze opposte: il primo è pubblico per costruzione, la seconda è leggibile solo da chi l'ha ricevuta.</p>
+    <div class="area-cases"><div class="case case-can"><h3>Si può</h3><ul><li>Entrare con le credenziali arrivate per email quando l'operatore ha abilitato l'e-learning (BO-06)</li><li>Recuperare la password da sé, con il link che arriva per email (AUT-R1, AUT-R2)</li><li>Leggere la scheda pubblica di un corso, indicizzabile sui motori di ricerca (PUB-01)</li><li>Aprire il POP di una persona dal suo link o dalla sua Smart Card NFC, senza login e senza scadenza (PUB-02)</li><li>Pagare dalla pagina personale che l'operatore ha generato per quel cliente (PUB-03)</li></ul></div><div class="case case-cant"><h3>Non si può</h3><ul><li>Registrarsi: non esiste auto-registrazione, gli account nascono in Backoffice (AUT-01, BO-06)</li><li>Vedere un prezzo o comprare dalla scheda corso: l'unica azione è «Richiedi informazioni» (PUB-01)</li><li>Entrare con un account disabilitato — che è lo stato in cui ogni account viene creato (§7)</li><li>Aprire la pagina di pagamento di un altro cliente: il link è riservato al destinatario (§7)</li><li>Sapere se un indirizzo ha un account: il recupero password risponde allo stesso modo in ogni caso (AUT-R1)</li></ul></div></div>
+  </div>
       <div class="area-num">
         <span class="area-pct">18<span>%</span></span>
         <div class="bar" role="img" aria-label="18%"><span class="bar-fill bar-grad" style="width:18%"></span></div>
@@ -494,6 +516,11 @@ footer p { font-size:12.5px; color:var(--muted); max-width:80ch; }
       </div>
       <h2>Area del discente</h2>
       <p class="area-hint">Il cuore del prodotto: i corsi, il player, i quiz, il POP.</p>
+      <div class="area-who">
+    <p class="area-roles"><b>Chi entra</b><span class="role role-learner" title="Entra in tutte le 25 pagine dell'area">Discente</span></p>
+    <p class="area-summary">Il solo Discente, e solo sui corsi che gli sono stati assegnati. È l'area in cui i risultati si producono e non si aggiustano: punteggi, esiti e POP sono calcolati dalla piattaforma e non sono modificabili da nessun ruolo, titolare compreso.</p>
+    <div class="area-cases"><div class="case case-can"><h3>Si può</h3><ul><li>Riprendere il corso dal punto esatto in cui lo aveva lasciato, da qualsiasi dispositivo (DIS-01, §7)</li><li>Fruire lezioni e blocchi quante volte vuole: la fruizione è libera e illimitata (Nota 4.2.n4)</li><li>Affrontare il test finale e vederne l'esito con il dettaglio per skill (DIS-05, DIS-06)</li><li>Ripetere il corso dopo il cooldown, per migliorare il punteggio (DIS-07, RULE 22)</li><li>Consultare il proprio POP e condividerne il link con un selezionatore (DIS-08)</li><li>Scrivere nella community del proprio corso: testo più un allegato (Nota 4.2.n6)</li></ul></div><div class="case case-cant"><h3>Non si può</h3><ul><li>Correggere punteggio, esito o POP: sono immodificabili, e non solo per lui (RULE 13, RULE 29)</li><li>Contestare la valutazione dell'agente AI: non esiste appello né revisione umana (Nota 4.2.n4)</li><li>Riaprire il test finale senza spendere un tentativo: si consuma all'apertura, non alla consegna (Nota 4.2.n4)</li><li>Aprire i moduli di una tranche non ancora sbloccata, né vedere gli importi che la sbloccano (§5.3)</li><li>Gestire consensi o preferenze di comunicazione: si revocano dai link nelle email del CRM (§7)</li><li>Scaricare o cancellare i propri dati da sé: la richiesta la esegue un Admin (§7, BO-14)</li><li>Restare connesso su due dispositivi: la nuova sessione chiude la precedente, previa conferma (Nota 4.2.n5)</li></ul></div></div>
+  </div>
       <div class="area-num">
         <span class="area-pct">0<span>%</span></span>
         <div class="bar" role="img" aria-label="0%"><span class="bar-fill bar-grad" style="width:0%"></span></div>
@@ -928,6 +955,11 @@ footer p { font-size:12.5px; color:var(--muted); max-width:80ch; }
       </div>
       <h2>Area LPM — costruzione dei corsi</h2>
       <p class="area-hint">Dove i corsi vengono scritti, strutturati e mandati in revisione.</p>
+      <div class="area-who">
+    <p class="area-roles"><b>Chi entra</b><span class="role role-lpm" title="Entra in tutte le 19 pagine dell'area">LPM</span></p>
+    <p class="area-summary">Il solo LPM — Learning Product Manager, la figura che ha sostituito il «Docente». Costruisce i corsi del catalogo e ne decide le regole didattiche; non incontra mai un cliente, un pagamento o un elaborato da valutare.</p>
+    <div class="area-cases"><div class="case case-can"><h3>Si può</h3><ul><li>Creare un corso in bozza e comporre moduli e lezioni alternando i blocchi (LPM-04, LPM-05)</li><li>Caricare un componente gamificato dalla libreria e mapparne il contributo al punteggio (LPM-05c, LPM-09)</li><li>Definire skill, pesi, soglia di superamento, tentativi e cooldown della ripetizione (LPM-06)</li><li>Mandare il corso in revisione e pubblicarlo, con l'approvazione finale dell'Admin (LPM-08, BO-09)</li><li>Provare il corso con gli occhi del discente, nello stesso player che userà lui (LPM-07)</li><li>Leggere gli esiti delle valutazioni AI, per capire se una domanda non funziona (LPM-12)</li></ul></div><div class="case case-cant"><h3>Non si può</h3><ul><li>Valutare un elaborato o correggere un punteggio: lo fanno gli agenti AI, senza revisione (RULE 29, LPM-12)</li><li>Vedere clienti, pacchetti, contratti o pagamenti: sono un'altra area e un altro ruolo (§4.3)</li><li>Abilitare un account o assegnare un corso a qualcuno (BO-06)</li><li>Pubblicare senza passare dalla revisione, quando l'Admin la richiede (LPM-08)</li><li>Modificare un corso pubblicato in faccia ai discenti attivi: la modifica apre una nuova versione (RULE 12)</li><li>Far entrare il fornitore esterno dei componenti: non ha accesso, i suoi pacchetti li carica l'LPM (LPM-09)</li></ul></div></div>
+  </div>
       <div class="area-num">
         <span class="area-pct">0<span>%</span></span>
         <div class="bar" role="img" aria-label="0%"><span class="bar-fill bar-grad" style="width:0%"></span></div>
@@ -1260,6 +1292,11 @@ footer p { font-size:12.5px; color:var(--muted); max-width:80ch; }
       </div>
       <h2>Backoffice — operativo</h2>
       <p class="area-hint">Clienti, pacchetti, contratti, pagamenti, abilitazioni.</p>
+      <div class="area-who">
+    <p class="area-roles"><b>Chi entra</b><span class="role role-admin" title="Entra in tutte le 14 pagine dell'area">Admin</span><span class="role role-operator" title="Entra in 3 delle 14 pagine dell'area">Operatore<i>3/14</i></span></p>
+    <p class="area-summary">Operatore commerciale e Admin, sui clienti che il CRM ha già portato allo stadio «in attesa di contratto». È l'area che vende ed eroga: pacchetto, contratto, incassi e abilitazione. Non è un CRM e non ne replica le viste.</p>
+    <div class="area-cases"><div class="case case-can"><h3>Si può</h3><ul><li>Comporre un pacchetto su misura dal listino e assegnarlo, o dare una demo o una singola lezione (BO-04, BO-05)</li><li>Dividere il pacchetto in 3 tranche di moduli interi e registrare il piano rate (§5.2)</li><li>Avviare la firma del contratto e generare la pagina di pagamento del cliente (BO-03c, BO-03d)</li><li>Confermare l'incasso di una rata: è quella conferma che sblocca la tranche successiva (§5.3)</li><li>Abilitare l'e-learning — l'atto che attiva l'account e fa partire le credenziali (BO-06)</li><li>Seguire avanzamento, punteggi e alert di abbandono dei propri clienti (BO-03e, BO-07)</li><li>Concedere un tentativo extra a chi è rimasto bloccato, senza toccare il punteggio (Nota 4.2.n4)</li></ul></div><div class="case case-cant"><h3>Non si può</h3><ul><li>Creare un cliente a mano: entra solo dal passaggio di stato in GoHighLevel (BO-02, RULE 1)</li><li>Vedere lead, pipeline o task del CRM: quelli restano in GoHighLevel (Nota 4.3.n1)</li><li>Modificare la divisione in tranche dopo il primo sblocco: da lì è materia dell'Admin (§5.2)</li><li>Assegnare un periodo di accesso che scada prima dell'ultima rata: l'interfaccia rifiuta il salvataggio (§5.5)</li><li>Approvare, respingere o correggere una valutazione (RULE 29)</li><li>Gestire ruoli, permessi, listino o regole globali: è l'area di amministrazione (BO-12, BO-19)</li></ul></div></div>
+  </div>
       <div class="area-num">
         <span class="area-pct">4<span>%</span></span>
         <div class="bar" role="img" aria-label="4%"><span class="bar-fill bar-grad" style="width:4%"></span></div>
@@ -1512,6 +1549,11 @@ footer p { font-size:12.5px; color:var(--muted); max-width:80ch; }
       </div>
       <h2>Backoffice — amministrazione</h2>
       <p class="area-hint">Solo Admin. Per un Operatore queste voci non esistono proprio.</p>
+      <div class="area-who">
+    <p class="area-roles"><b>Chi entra</b><span class="role role-admin" title="Entra in tutte le 15 pagine dell'area">Admin</span></p>
+    <p class="area-summary">Solo Admin. Per un Operatore queste voci non esistono: le rotte non vengono nemmeno registrate, quindi non c'è una pagina che nega l'accesso — non c'è la voce di menu. È dove si configurano le regole che tutte le altre aree applicano.</p>
+    <div class="area-cases"><div class="case case-can"><h3>Si può</h3><ul><li>Gestire utenti, ruoli e permessi secondo il minimo privilegio (BO-12, BO-13)</li><li>Governare il catalogo: coda di revisione, pubblicazione, pacchetti base e listino (BO-09, BO-10)</li><li>Abilitare o disabilitare i componenti gamificati per l'uso nei corsi (BO-11)</li><li>Configurare le regole globali: soglie, tentativi, cooldown, durata dell'accesso, criterio di sblocco delle tranche (BO-19)</li><li>Mappare gli eventi della piattaforma sui tag e sulle automazioni del CRM (BO-20)</li><li>Evadere le richieste GDPR anche per conto di chi non riesce più ad accedere (BO-14, §7)</li><li>Moderare i contenuti della community e le foto profilo (BO-15)</li><li>Leggere le statistiche di piattaforma — le stesse quattro metriche che vede l'Analista (BO-18, §4.3)</li></ul></div><div class="case case-cant"><h3>Non si può</h3><ul><li>Cambiare un punteggio, un esito o un POP: l'immodificabilità non ha eccezioni di ruolo (RULE 13, RULE 29)</li><li>Scrivere nel CRM oltre i tag: verso GoHighLevel transitano gli stati, non i dati contabili (Nota 6.n1)</li><li>Cancellare i dati amministrativi di una transazione: si conservano per obbligo di legge (§7)</li><li>Far sparire i progressi di un discente sospeso: la sospensione tocca l'accesso, non i risultati (§5.4)</li></ul></div></div>
+  </div>
       <div class="area-num">
         <span class="area-pct">13<span>%</span></span>
         <div class="bar" role="img" aria-label="13%"><span class="bar-fill bar-grad" style="width:13%"></span></div>
