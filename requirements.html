@@ -126,6 +126,19 @@
   .cols { display: grid; grid-template-columns: 272px minmax(0, 1fr); gap: 2.75rem; align-items: start; }
   .rail { position: sticky; top: 1.25rem; max-height: calc(100vh - 2.5rem); overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; gap: 1.25rem; padding: 1rem .25rem 2rem 0; }
 
+  /* The rail's own scrollbar: thin, no track, and it firms up while the pointer is in the list. The
+     browser's default one is a grey slab as wide as the percentages column, and it reads as a second
+     border down the middle of the page.
+     Declared TWICE on purpose: the two standard properties are what modern browsers use — and where
+     they apply, the ::-webkit- pseudo-elements below are ignored, so the pair cannot fight. Those are
+     the fallback for older WebKit, which never implemented the standard ones. */
+  .rail { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--neutral) 35%, transparent) transparent; }
+  .rail:hover { scrollbar-color: color-mix(in srgb, var(--neutral) 60%, transparent) transparent; }
+  .rail::-webkit-scrollbar { width: 6px; }
+  .rail::-webkit-scrollbar-track { background: transparent; }
+  .rail::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--neutral) 35%, transparent); border-radius: 99px; }
+  .rail:hover::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--neutral) 60%, transparent); }
+
   .r-group { display: flex; flex-direction: column; gap: 1px; }
   .r-head { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; text-decoration: none; color: var(--heading); font-size: .6875rem; letter-spacing: .07em; text-transform: uppercase; padding: .35rem 0 .45rem; border-bottom: 1px solid var(--line); margin-bottom: .35rem; }
   .r-mini { font-family: 'DM Mono', ui-monospace, monospace; color: var(--muted); letter-spacing: 0; font-variant-numeric: tabular-nums; flex: none; }
@@ -1246,7 +1259,7 @@
   </div>
 
   <footer class="foot">
-    <span>Pagina generata da <code>tools/todo/build-todo.mjs</code> il 30/08/2026, 11:30</span>
+    <span>Pagina generata da <code>tools/todo/build-todo.mjs</code> il 30/08/2026, 11:38</span>
     <span>Applicazione <code>v0.5.5</code></span>
     <span>Schermate fotografate il 30/08/2026</span>
     <span>Sito di prova: <a href="https://web--fulcro-talent-staging.europe-west4.hosted.app/" target="_blank" rel="noopener">staging</a></span>
