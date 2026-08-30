@@ -143,10 +143,17 @@
   .r-head { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; text-decoration: none; color: var(--heading); font-size: .6875rem; letter-spacing: .07em; text-transform: uppercase; padding: .35rem 0 .45rem; border-bottom: 1px solid var(--line); margin-bottom: .35rem; }
   .r-mini { font-family: 'DM Mono', ui-monospace, monospace; color: var(--muted); letter-spacing: 0; font-variant-numeric: tabular-nums; flex: none; }
 
-  .r-item { display: grid; grid-template-columns: minmax(0, 1fr) 2.5rem; align-items: baseline; gap: .5rem; text-decoration: none; color: var(--muted); font-size: .78rem; line-height: 1.35; padding: .3rem .45rem; border-radius: 6px; border-left: 2px solid transparent; transition: background .15s, color .15s; }
+  /* The waiting mark. Violet is the brand's «indicazione» role (docs/design/style.md §2): this is a
+     REASON, not a severity — an amber or a red here would read as something going wrong, and nothing
+     is: somebody else simply has not answered yet. */
+  .wait { color: var(--info-ink); display: inline-flex; align-items: center; flex: none; cursor: help; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+  .r-item { display: grid; grid-template-columns: minmax(0, 1fr) auto 2.5rem; align-items: baseline; gap: .5rem; text-decoration: none; color: var(--muted); font-size: .78rem; line-height: 1.35; padding: .3rem .45rem; border-radius: 6px; border-left: 2px solid transparent; transition: background .15s, color .15s; }
   .r-item:hover { background: var(--surface-2); color: var(--fg); }
   .r-item.now { background: var(--surface-2); color: var(--heading); border-left-color: var(--primary); }
   .r-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .r-wait { width: 13px; height: 13px; display: inline-flex; align-self: center; }
   .r-value { font-family: 'DM Mono', ui-monospace, monospace; font-size: .6875rem; font-variant-numeric: tabular-nums; text-align: right; }
   .r-value.success { color: var(--success-ink); }
   .r-value.warning { color: var(--warning-ink); }
@@ -258,33 +265,69 @@
           <span class="r-mini">6/10</span></a>
         <a class="r-item" href="#v1" data-state="done" title="completa — Pagina di accesso con e-mail e password">
             <span class="r-title">Pagina di accesso con e-mail e password</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v2" data-state="done" title="completa — Nessuna auto-registrazione: si entra solo con un account creato dal backoffice">
             <span class="r-title">Nessuna auto-registrazione: si entra solo con un account creato dal backoffice</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v3" data-state="done" title="completa — Accesso con Google, Facebook e Apple">
             <span class="r-title">Accesso con Google, Facebook e Apple</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v4" data-state="done" title="completa — Recupero password: richiesta e nuova password dal link">
             <span class="r-title">Recupero password: richiesta e nuova password dal link</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v5" data-state="done" title="completa — Pagina di ritorno dalle e-mail di Firebase (verifica indirizzo, ripristino)">
             <span class="r-title">Pagina di ritorno dalle e-mail di Firebase (verifica indirizzo, ripristino)</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v6" data-state="wip" title="in corso 85% — Schermate di blocco: sospeso, recesso, accesso scaduto, errore di sistema, account disabilitato">
             <span class="r-title">Schermate di blocco: sospeso, recesso, accesso scaduto, errore di sistema, account disabilitato</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value warning">85%</span>
-          </a><a class="r-item" href="#v7" data-state="wip" title="in corso 70% — Ruoli e permessi lato interfaccia">
+          </a><a class="r-item" href="#v7" data-state="wip" title="in corso 70% — Ruoli e permessi lato interfaccia · in attesa: il back end — GET /users/me non risponde ancora">
             <span class="r-title">Ruoli e permessi lato interfaccia</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="wait r-wait" title="In attesa: il back end — GET /users/me non risponde ancora"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor"
+        stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <circle cx="7" cy="7.6" r="5.4"></circle><path d="M7 4.6v3h2.2"></path></svg><span class="sr">In attesa: il back end — GET /users/me non risponde ancora</span></span>
             <span class="r-value warning">70%</span>
-          </a><a class="r-item" href="#v8" data-state="blocked" title="bloccata — Sessione unica attiva per utente">
+          </a><a class="r-item" href="#v8" data-state="blocked" title="bloccata — Sessione unica attiva per utente · in attesa: una decisione del back end: il requisito e il loro piano si contraddicono">
             <span class="r-title">Sessione unica attiva per utente</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="wait r-wait" title="In attesa: una decisione del back end: il requisito e il loro piano si contraddicono"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor"
+        stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <circle cx="7" cy="7.6" r="5.4"></circle><path d="M7 4.6v3h2.2"></path></svg><span class="sr">In attesa: una decisione del back end: il requisito e il loro piano si contraddicono</span></span>
             <span class="r-value danger">0%</span>
-          </a><a class="r-item" href="#v9" data-state="wip" title="in corso 60% — Il backend fornisce login, token e profilo">
+          </a><a class="r-item" href="#v9" data-state="wip" title="in corso 60% — Il backend fornisce login, token e profilo · in attesa: il back end">
             <span class="r-title">Il backend fornisce login, token e profilo</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="wait r-wait" title="In attesa: il back end"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor"
+        stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <circle cx="7" cy="7.6" r="5.4"></circle><path d="M7 4.6v3h2.2"></path></svg><span class="sr">In attesa: il back end</span></span>
             <span class="r-value warning">60%</span>
           </a><a class="r-item" href="#v10" data-state="done" title="completa — Il ruolo si disegna in un posto solo">
             <span class="r-title">Il ruolo si disegna in un posto solo</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a>
       </div><div class="r-group">
@@ -292,48 +335,101 @@
           <span class="r-mini">9/15</span></a>
         <a class="r-item" href="#v11" data-state="done" title="completa — Cruscotto operativo: «da fare oggi» e coda di lavoro">
             <span class="r-title">Cruscotto operativo: «da fare oggi» e coda di lavoro</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
-          </a><a class="r-item" href="#v12" data-state="wip" title="in corso 85% — Elenco clienti con i quattro stati (pacchetto, contratto, pagamento, e-learning)">
+          </a><a class="r-item" href="#v12" data-state="wip" title="in corso 85% — Elenco clienti con i quattro stati (pacchetto, contratto, pagamento, e-learning) · in attesa: il back end, per l’ingresso dei clienti da GoHighLevel">
             <span class="r-title">Elenco clienti con i quattro stati (pacchetto, contratto, pagamento, e-learning)</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="wait r-wait" title="In attesa: il back end, per l’ingresso dei clienti da GoHighLevel"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor"
+        stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <circle cx="7" cy="7.6" r="5.4"></circle><path d="M7 4.6v3h2.2"></path></svg><span class="sr">In attesa: il back end, per l’ingresso dei clienti da GoHighLevel</span></span>
             <span class="r-value warning">85%</span>
           </a><a class="r-item" href="#v13" data-state="done" title="completa — Scheda cliente: quattro stati sempre visibili + sei schede">
             <span class="r-title">Scheda cliente: quattro stati sempre visibili + sei schede</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v14" data-state="done" title="completa — Panoramica e cronologia del cliente">
             <span class="r-title">Panoramica e cronologia del cliente</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v15" data-state="done" title="completa — Pacchetto e assegnazioni">
             <span class="r-title">Pacchetto e assegnazioni</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
-          </a><a class="r-item" href="#v16" data-state="wip" title="in corso 80% — Contratto e firma">
+          </a><a class="r-item" href="#v16" data-state="wip" title="in corso 80% — Contratto e firma · in attesa: il fornitore di firma elettronica, che non esiste ancora">
             <span class="r-title">Contratto e firma</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="wait r-wait" title="In attesa: il fornitore di firma elettronica, che non esiste ancora"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor"
+        stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <circle cx="7" cy="7.6" r="5.4"></circle><path d="M7 4.6v3h2.2"></path></svg><span class="sr">In attesa: il fornitore di firma elettronica, che non esiste ancora</span></span>
             <span class="r-value warning">80%</span>
           </a><a class="r-item" href="#v17" data-state="wip" title="in corso 90% — Pagamenti: piano rate, incassi e sblocco delle tranche">
             <span class="r-title">Pagamenti: piano rate, incassi e sblocco delle tranche</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value warning">90%</span>
           </a><a class="r-item" href="#v18" data-state="done" title="completa — Fruizione e statistiche del cliente">
             <span class="r-title">Fruizione e statistiche del cliente</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v19" data-state="done" title="completa — Note e follow-up">
             <span class="r-title">Note e follow-up</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v20" data-state="done" title="completa — Compositore pacchetto in quattro passi">
             <span class="r-title">Compositore pacchetto in quattro passi</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v21" data-state="done" title="completa — Assegna corso demo o lezione singola">
             <span class="r-title">Assegna corso demo o lezione singola</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
-          </a><a class="r-item" href="#v22" data-state="wip" title="in corso 95% — Abilitazione e-learning: l'atto che crea l'account del discente">
+          </a><a class="r-item" href="#v22" data-state="wip" title="in corso 95% — Abilitazione e-learning: l'atto che crea l'account del discente · in attesa: il back end, per l’invio delle credenziali">
             <span class="r-title">Abilitazione e-learning: l'atto che crea l'account del discente</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="wait r-wait" title="In attesa: il back end, per l’invio delle credenziali"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor"
+        stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <circle cx="7" cy="7.6" r="5.4"></circle><path d="M7 4.6v3h2.2"></path></svg><span class="sr">In attesa: il back end, per l’invio delle credenziali</span></span>
             <span class="r-value warning">95%</span>
-          </a><a class="r-item" href="#v23" data-state="wip" title="in corso 90% — Pagina di pagamento per il cliente, in tre passi">
+          </a><a class="r-item" href="#v23" data-state="wip" title="in corso 90% — Pagina di pagamento per il cliente, in tre passi · in attesa: il fornitore di pagamento">
             <span class="r-title">Pagina di pagamento per il cliente, in tre passi</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="wait r-wait" title="In attesa: il fornitore di pagamento"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor"
+        stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <circle cx="7" cy="7.6" r="5.4"></circle><path d="M7 4.6v3h2.2"></path></svg><span class="sr">In attesa: il fornitore di pagamento</span></span>
             <span class="r-value warning">90%</span>
           </a><a class="r-item" href="#v24" data-state="done" title="completa — Alert e recuperi">
             <span class="r-title">Alert e recuperi</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v25" data-state="todo" title="da fare — Wiki-assistente AI per gli operatori">
             <span class="r-title">Wiki-assistente AI per gli operatori</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value neutral">0%</span>
           </a>
       </div><div class="r-group">
@@ -341,45 +437,89 @@
           <span class="r-mini">8/14</span></a>
         <a class="r-item" href="#v26" data-state="done" title="completa — Catalogo corsi e coda di revisione">
             <span class="r-title">Catalogo corsi e coda di revisione</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v27" data-state="done" title="completa — Pacchetti base e listino">
             <span class="r-title">Pacchetti base e listino</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v28" data-state="todo" title="da fare — Libreria componenti gamificati — abilitazione">
             <span class="r-title">Libreria componenti gamificati — abilitazione</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value neutral">10%</span>
           </a><a class="r-item" href="#v29" data-state="done" title="completa — Utenti: elenco, creazione e filtro per ruolo">
             <span class="r-title">Utenti: elenco, creazione e filtro per ruolo</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v30" data-state="done" title="completa — Ruoli e permessi (scope)">
             <span class="r-title">Ruoli e permessi (scope)</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v31" data-state="done" title="completa — Dettaglio di un utente">
             <span class="r-title">Dettaglio di un utente</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v32" data-state="done" title="completa — Richieste GDPR: export e cancellazione">
             <span class="r-title">Richieste GDPR: export e cancellazione</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v33" data-state="todo" title="da fare — Moderazione di community e foto profilo">
             <span class="r-title">Moderazione di community e foto profilo</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value neutral">10%</span>
           </a><a class="r-item" href="#v34" data-state="done" title="completa — Contratti — vista globale">
             <span class="r-title">Contratti — vista globale</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
-          </a><a class="r-item" href="#v35" data-state="wip" title="in corso 85% — Pagamenti e transazioni — vista globale e riconciliazione">
+          </a><a class="r-item" href="#v35" data-state="wip" title="in corso 85% — Pagamenti e transazioni — vista globale e riconciliazione · in attesa: il fornitore di pagamento, per attaccare i movimenti alle rate">
             <span class="r-title">Pagamenti e transazioni — vista globale e riconciliazione</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="wait r-wait" title="In attesa: il fornitore di pagamento, per attaccare i movimenti alle rate"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor"
+        stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <circle cx="7" cy="7.6" r="5.4"></circle><path d="M7 4.6v3h2.2"></path></svg><span class="sr">In attesa: il fornitore di pagamento, per attaccare i movimenti alle rate</span></span>
             <span class="r-value warning">85%</span>
           </a><a class="r-item" href="#v36" data-state="todo" title="da fare — Statistiche di piattaforma">
             <span class="r-title">Statistiche di piattaforma</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value neutral">10%</span>
           </a><a class="r-item" href="#v37" data-state="blocked" title="bloccata — Regole globali di default">
             <span class="r-title">Regole globali di default</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value danger">10%</span>
           </a><a class="r-item" href="#v38" data-state="done" title="completa — Eventi della piattaforma → tag e automazioni nel CRM">
             <span class="r-title">Eventi della piattaforma → tag e automazioni nel CRM</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v39" data-state="todo" title="da fare — Stato delle connessioni dati">
             <span class="r-title">Stato delle connessioni dati</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value neutral">10%</span>
           </a>
       </div><div class="r-group">
@@ -387,33 +527,63 @@
           <span class="r-mini">9/10</span></a>
         <a class="r-item" href="#v40" data-state="done" title="completa — Una sola applicazione, non due">
             <span class="r-title">Una sola applicazione, non due</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v41" data-state="done" title="completa — Firebase collegato a mano, non con AngularFire">
             <span class="r-title">Firebase collegato a mano, non con AngularFire</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v42" data-state="done" title="completa — Nessun Firestore: i dati stanno nei microservizi del backend">
             <span class="r-title">Nessun Firestore: i dati stanno nei microservizi del backend</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v43" data-state="done" title="completa — Form con le Signal Forms, non le Reactive Forms">
             <span class="r-title">Form con le Signal Forms, non le Reactive Forms</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v44" data-state="done" title="completa — Il design system l'abbiamo fatto noi">
             <span class="r-title">Il design system l'abbiamo fatto noi</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v45" data-state="done" title="completa — Lo stato della vista sta sempre nell'indirizzo">
             <span class="r-title">Lo stato della vista sta sempre nell'indirizzo</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v46" data-state="done" title="completa — Niente landing pubblica: l'indirizzo principale è il login">
             <span class="r-title">Niente landing pubblica: l'indirizzo principale è il login</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v47" data-state="done" title="completa — Il ruolo Docente non esiste, c'è l'LPM">
             <span class="r-title">Il ruolo Docente non esiste, c'è l'LPM</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a><a class="r-item" href="#v48" data-state="wip" title="in corso 20% — Il rendering lato server è predisposto ma spento">
             <span class="r-title">Il rendering lato server è predisposto ma spento</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value warning">20%</span>
           </a><a class="r-item" href="#v49" data-state="done" title="completa — I dati finti si accendono a mano">
             <span class="r-title">I dati finti si accendono a mano</span>
+            <!-- ⚠️ The cell is emitted even when empty: the row is a three-column grid, and a missing
+                 child would slide every percentage of a non-waiting voice one column to the left. -->
+            <span class="r-wait"></span>
             <span class="r-value success">100%</span>
           </a>
       </div></nav>
@@ -429,6 +599,11 @@
       <p><b>I collegamenti.</b> Aprono la schermata sul sito di prova. Per vedere dati dentro le liste,
         dal pannello di sviluppo in basso a destra premi <b>«Usa i dati finti»</b>: i servizi finti non
         si accendono più da soli.</p>
+      <p><b>L’orologio <svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor"
+        stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <circle cx="7" cy="7.6" r="5.4"></circle><path d="M7 4.6v3h2.2"></path></svg></b> segna le voci ferme per qualcosa che <b>non dipende da noi</b>:
+        8 su 39. Passandoci sopra dice chi si sta aspettando — il back end, un
+        fornitore, una decisione. Le altre incomplete sono lavoro nostro.</p>
       <p><b>Le sigle.</b> <b>REQ</b> = documento dei requisiti · <b>WF-n</b> = tavola dei wireframe ·
         <b>MU</b> = mockup a colori · <b>OVERVIEW</b> = panoramica del cliente v1.1.0 ·
         <b>RULE n</b> = regola di prodotto invariante.</p>
@@ -443,6 +618,7 @@
       <div class="items"><article class="item" id="v1" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Pagina di accesso con e-mail e password</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -465,6 +641,7 @@
     </article><article class="item" id="v2" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Nessuna auto-registrazione: si entra solo con un account creato dal backoffice</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -487,6 +664,7 @@
     </article><article class="item" id="v3" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Accesso con Google, Facebook e Apple</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -504,6 +682,7 @@
     </article><article class="item" id="v4" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Recupero password: richiesta e nuova password dal link</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -521,6 +700,7 @@
     </article><article class="item" id="v5" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Pagina di ritorno dalle e-mail di Firebase (verifica indirizzo, ripristino)</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -538,6 +718,7 @@
     </article><article class="item" id="v6" data-state="wip">
       <header class="head">
         <span class="badge warning">in corso 85%</span>
+        
         <h3>Schermate di blocco: sospeso, recesso, accesso scaduto, errore di sistema, account disabilitato</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 85%">
@@ -560,6 +741,9 @@
     </article><article class="item" id="v7" data-state="wip">
       <header class="head">
         <span class="badge warning">in corso 70%</span>
+        <span class="wait " title="In attesa: il back end — GET /users/me non risponde ancora"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor"
+        stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <circle cx="7" cy="7.6" r="5.4"></circle><path d="M7 4.6v3h2.2"></path></svg><span class="sr">In attesa: il back end — GET /users/me non risponde ancora</span></span>
         <h3>Ruoli e permessi lato interfaccia</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 70%">
@@ -572,6 +756,9 @@
     </article><article class="item" id="v8" data-state="blocked">
       <header class="head">
         <span class="badge danger">bloccata</span>
+        <span class="wait " title="In attesa: una decisione del back end: il requisito e il loro piano si contraddicono"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor"
+        stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <circle cx="7" cy="7.6" r="5.4"></circle><path d="M7 4.6v3h2.2"></path></svg><span class="sr">In attesa: una decisione del back end: il requisito e il loro piano si contraddicono</span></span>
         <h3>Sessione unica attiva per utente</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 0%">
@@ -584,6 +771,9 @@
     </article><article class="item" id="v9" data-state="wip">
       <header class="head">
         <span class="badge warning">in corso 60%</span>
+        <span class="wait " title="In attesa: il back end"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor"
+        stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <circle cx="7" cy="7.6" r="5.4"></circle><path d="M7 4.6v3h2.2"></path></svg><span class="sr">In attesa: il back end</span></span>
         <h3>Il backend fornisce login, token e profilo</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 60%">
@@ -595,6 +785,7 @@
     </article><article class="item" id="v10" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Il ruolo si disegna in un posto solo</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -619,6 +810,7 @@
       <div class="items"><article class="item" id="v11" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Cruscotto operativo: «da fare oggi» e coda di lavoro</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -641,6 +833,9 @@
     </article><article class="item" id="v12" data-state="wip">
       <header class="head">
         <span class="badge warning">in corso 85%</span>
+        <span class="wait " title="In attesa: il back end, per l’ingresso dei clienti da GoHighLevel"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor"
+        stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <circle cx="7" cy="7.6" r="5.4"></circle><path d="M7 4.6v3h2.2"></path></svg><span class="sr">In attesa: il back end, per l’ingresso dei clienti da GoHighLevel</span></span>
         <h3>Elenco clienti con i quattro stati (pacchetto, contratto, pagamento, e-learning)</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 85%">
@@ -663,6 +858,7 @@
     </article><article class="item" id="v13" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Scheda cliente: quattro stati sempre visibili + sei schede</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -685,6 +881,7 @@
     </article><article class="item" id="v14" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Panoramica e cronologia del cliente</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -702,6 +899,7 @@
     </article><article class="item" id="v15" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Pacchetto e assegnazioni</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -724,6 +922,9 @@
     </article><article class="item" id="v16" data-state="wip">
       <header class="head">
         <span class="badge warning">in corso 80%</span>
+        <span class="wait " title="In attesa: il fornitore di firma elettronica, che non esiste ancora"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor"
+        stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <circle cx="7" cy="7.6" r="5.4"></circle><path d="M7 4.6v3h2.2"></path></svg><span class="sr">In attesa: il fornitore di firma elettronica, che non esiste ancora</span></span>
         <h3>Contratto e firma</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 80%">
@@ -741,6 +942,7 @@
     </article><article class="item" id="v17" data-state="wip">
       <header class="head">
         <span class="badge warning">in corso 90%</span>
+        
         <h3>Pagamenti: piano rate, incassi e sblocco delle tranche</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 90%">
@@ -763,6 +965,7 @@
     </article><article class="item" id="v18" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Fruizione e statistiche del cliente</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -780,6 +983,7 @@
     </article><article class="item" id="v19" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Note e follow-up</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -797,6 +1001,7 @@
     </article><article class="item" id="v20" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Compositore pacchetto in quattro passi</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -819,6 +1024,7 @@
     </article><article class="item" id="v21" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Assegna corso demo o lezione singola</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -836,6 +1042,9 @@
     </article><article class="item" id="v22" data-state="wip">
       <header class="head">
         <span class="badge warning">in corso 95%</span>
+        <span class="wait " title="In attesa: il back end, per l’invio delle credenziali"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor"
+        stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <circle cx="7" cy="7.6" r="5.4"></circle><path d="M7 4.6v3h2.2"></path></svg><span class="sr">In attesa: il back end, per l’invio delle credenziali</span></span>
         <h3>Abilitazione e-learning: l'atto che crea l'account del discente</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 95%">
@@ -858,6 +1067,9 @@
     </article><article class="item" id="v23" data-state="wip">
       <header class="head">
         <span class="badge warning">in corso 90%</span>
+        <span class="wait " title="In attesa: il fornitore di pagamento"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor"
+        stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <circle cx="7" cy="7.6" r="5.4"></circle><path d="M7 4.6v3h2.2"></path></svg><span class="sr">In attesa: il fornitore di pagamento</span></span>
         <h3>Pagina di pagamento per il cliente, in tre passi</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 90%">
@@ -880,6 +1092,7 @@
     </article><article class="item" id="v24" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Alert e recuperi</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -897,6 +1110,7 @@
     </article><article class="item" id="v25" data-state="todo">
       <header class="head">
         <span class="badge neutral">da fare</span>
+        
         <h3>Wiki-assistente AI per gli operatori</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 0%">
@@ -915,6 +1129,7 @@
       <div class="items"><article class="item" id="v26" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Catalogo corsi e coda di revisione</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -932,6 +1147,7 @@
     </article><article class="item" id="v27" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Pacchetti base e listino</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -949,6 +1165,7 @@
     </article><article class="item" id="v28" data-state="todo">
       <header class="head">
         <span class="badge neutral">da fare</span>
+        
         <h3>Libreria componenti gamificati — abilitazione</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 10%">
@@ -961,6 +1178,7 @@
     </article><article class="item" id="v29" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Utenti: elenco, creazione e filtro per ruolo</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -978,6 +1196,7 @@
     </article><article class="item" id="v30" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Ruoli e permessi (scope)</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -995,6 +1214,7 @@
     </article><article class="item" id="v31" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Dettaglio di un utente</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -1012,6 +1232,7 @@
     </article><article class="item" id="v32" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Richieste GDPR: export e cancellazione</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -1029,6 +1250,7 @@
     </article><article class="item" id="v33" data-state="todo">
       <header class="head">
         <span class="badge neutral">da fare</span>
+        
         <h3>Moderazione di community e foto profilo</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 10%">
@@ -1041,6 +1263,7 @@
     </article><article class="item" id="v34" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Contratti — vista globale</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -1058,6 +1281,9 @@
     </article><article class="item" id="v35" data-state="wip">
       <header class="head">
         <span class="badge warning">in corso 85%</span>
+        <span class="wait " title="In attesa: il fornitore di pagamento, per attaccare i movimenti alle rate"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor"
+        stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <circle cx="7" cy="7.6" r="5.4"></circle><path d="M7 4.6v3h2.2"></path></svg><span class="sr">In attesa: il fornitore di pagamento, per attaccare i movimenti alle rate</span></span>
         <h3>Pagamenti e transazioni — vista globale e riconciliazione</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 85%">
@@ -1075,6 +1301,7 @@
     </article><article class="item" id="v36" data-state="todo">
       <header class="head">
         <span class="badge neutral">da fare</span>
+        
         <h3>Statistiche di piattaforma</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 10%">
@@ -1092,6 +1319,7 @@
     </article><article class="item" id="v37" data-state="blocked">
       <header class="head">
         <span class="badge danger">bloccata</span>
+        
         <h3>Regole globali di default</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 10%">
@@ -1104,6 +1332,7 @@
     </article><article class="item" id="v38" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Eventi della piattaforma → tag e automazioni nel CRM</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -1126,6 +1355,7 @@
     </article><article class="item" id="v39" data-state="todo">
       <header class="head">
         <span class="badge neutral">da fare</span>
+        
         <h3>Stato delle connessioni dati</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 10%">
@@ -1145,6 +1375,7 @@
       <div class="items"><article class="item" id="v40" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Una sola applicazione, non due</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -1156,6 +1387,7 @@
     </article><article class="item" id="v41" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Firebase collegato a mano, non con AngularFire</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -1167,6 +1399,7 @@
     </article><article class="item" id="v42" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Nessun Firestore: i dati stanno nei microservizi del backend</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -1178,6 +1411,7 @@
     </article><article class="item" id="v43" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Form con le Signal Forms, non le Reactive Forms</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -1189,6 +1423,7 @@
     </article><article class="item" id="v44" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Il design system l'abbiamo fatto noi</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -1201,6 +1436,7 @@
     </article><article class="item" id="v45" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Lo stato della vista sta sempre nell'indirizzo</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -1212,6 +1448,7 @@
     </article><article class="item" id="v46" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Niente landing pubblica: l'indirizzo principale è il login</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -1223,6 +1460,7 @@
     </article><article class="item" id="v47" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>Il ruolo Docente non esiste, c'è l'LPM</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -1234,6 +1472,7 @@
     </article><article class="item" id="v48" data-state="wip">
       <header class="head">
         <span class="badge warning">in corso 20%</span>
+        
         <h3>Il rendering lato server è predisposto ma spento</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 20%">
@@ -1245,6 +1484,7 @@
     </article><article class="item" id="v49" data-state="done">
       <header class="head">
         <span class="badge success">completa</span>
+        
         <h3>I dati finti si accendono a mano</h3>
       </header>
       <div class="meter" role="img" aria-label="avanzamento 100%">
@@ -1259,7 +1499,7 @@
   </div>
 
   <footer class="foot">
-    <span>Pagina generata da <code>tools/todo/build-todo.mjs</code> il 30/08/2026, 11:38</span>
+    <span>Pagina generata da <code>tools/todo/build-todo.mjs</code> il 30/08/2026, 11:43</span>
     <span>Applicazione <code>v0.5.5</code></span>
     <span>Schermate fotografate il 30/08/2026</span>
     <span>Sito di prova: <a href="https://web--fulcro-talent-staging.europe-west4.hosted.app/" target="_blank" rel="noopener">staging</a></span>
